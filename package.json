@@ -1,0 +1,15 @@
+{
+  "name": "sleep-tracker-app",
+  "version": "1.0.0",
+  "description": "A Sleep Tracker App to monitor and analyze sleep patterns.",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.12.3",
+    "socket.io": "^4.0.0",
+    "dotenv": "^8.2.0"
+  }
+}
