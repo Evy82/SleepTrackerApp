@@ -1,1 +1,1 @@
-# SleepTrackerApp
+SleepTrackerApp is a modern web application designed to help users monitor and analyze their sleep patterns. Built with TypeScript, it seamlessly captures sleep data, provides insightful analytics, and offers personalized sleep improvement recommendations. This project focuses on creating a user-friendly interface to render the main application component into the DOM, enabling an interactive and engaging user experience for optimizing sleep health.
