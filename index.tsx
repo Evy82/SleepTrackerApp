@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
-import dotenv from 'dotenv';
+import SleepTrackerApp from './SleepTrackerApp';
+import envConfig from 'dotenv';
 
-dotenv.config();
+envConfig.config();
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <SleepTrackerApp />
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById('appRoot')
 );
