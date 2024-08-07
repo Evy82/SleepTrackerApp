@@ -4,14 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Frontend Application</title>
+    <style>
+        /* Basic styles for navigation */
+        nav a {
+            margin-right: 12px;
+            text-decoration: none;
+            color: blue;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
+    <nav>
+        <a href="#" onclick="loadPage('home')">Home</a>
+        <a href="#" onclick="loadPage('author')">Author Page</a>
+    </nav>
     <div id="app">
+        <!-- Content will be loaded here -->
     </div>
     <script>
         window.env = {
             API_URL: 'YOUR_API_URL',
         };
+
+        function loadPage(page) {
+            const appDiv = document.getElementById('app');
+            if (page === 'author') {
+                appDiv.innerHTML = '<h1>Author Page</h1>' +
+                                   '<p>Welcome to the Author page. Learn more about the creator of this SleepTrackerApp.</p>' +
+                                   '<p>Insert author details here...</p>';
+            } else {
+                appDiv.innerHTML = ''; // You can add your home page content here or load it similarly as done with the Author page.
+            }
+        }
     </script>
     <script src="path/to/your/script.js"></script>
 </body>
