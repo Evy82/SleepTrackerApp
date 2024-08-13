@@ -1,0 +1,86 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.main-container {
+  max-width: 1200px;
+  margin: 20px;
+  padding: 20px;
+  background: #ffffff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.sleep-log-list {
+  list-style: none;
+  padding: 0;
+}
+
+.sleep-log-list li {
+  border-bottom: 1px solid #eeeeee;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.sleep-log-list li:last-child {
+  border-bottom: none;
+}
+
+.sleep-log-detail {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.sleep-log-detail h2 {
+  margin-top: 0;
+}
+
+.add-sleep-log-form,
+.sleep-goal-form {
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.add-sleep-log-form label,
+.sleep-goal-form label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.add-sleep-log-form input[type="text"],
+.add-sleep-log-form input[type="date"],
+.add-sleep-log-form input[type="time"],
+.sleep-goal-form input[type="text"],
+.sleep-goal-form input[type="number"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  border: 1px solid #dddddd;
+}
+
+.add-sleep-log-form button,
+.sleep-goal-form button {
+  background-color: #5cb85c;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.add-sleep-log-form button:hover,
+.sleep-goal-form button:hover {
+  background-color: #449d44;
+}
+
+.sleep-goal-form {
+  margin-top: 20px;
+}
