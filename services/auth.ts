@@ -5,7 +5,7 @@ import { User } from './models/User';
 
 dotenv.config();
 
-const JWT_SECRET = process.env.JWT_SECRET || '';
+const JWT_SECRET = process.env.JWT_SECRET || 'your_default_secret';
 const JWT_EXPIRATION = process.env.JWT_EXPIRATION || '1h';
 
 interface Credentials {
@@ -32,11 +32,9 @@ function generateToken(userId: number): string {
 export async function loginUser(credentials: Credentials): Promise<string | null> {
   try {
     const user = await User.findOne({ where: { username: credentials.username } });
-    if (!user) return null;
-
-    const isPasswordValid = await verifyPassword(credentials.password, user.passwordHash);
-    if (!isPasswordValid) return null;
-
+    if (!user || !(await verifyPassword(credentials.password, user.passwordHash))) {
+      return null;
+    }
     return generateToken(user.id);
   } catch (error) {
     console.error('Error logging in user:', error);
