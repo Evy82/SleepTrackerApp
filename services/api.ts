@@ -13,23 +13,24 @@ interface SleepGoal {
 }
 
 const sleepLogCache = new Map<number, SleepLog>();
+
 const sleepLogsCache = {
-    lastFetch: 0,
+    lastFetchTimestamp: 0,
     data: [] as SleepLog[],
 };
 
 export const fetchSleepLogs = async (): Promise<SleepLog[]> => {
-    const cacheTimeout = 5 * 60 * 1000;
-    const now = Date.now();
+    const FIVE_MINUTES_IN_MILLISECONDS = 5 * 60 * 1000;
+    const currentTime = Date.now();
 
-    if (now - sleepLogsCache.lastFetch < cacheTimeout) {
+    if (currentTime - sleepLogsCache.lastFetchTimestamp < FIVE_MINUTES_IN_MILLISECONDS) {
         return sleepLogsCache.data;
     }
 
     try {
         const response = await axios.get(`${BASE_URL}/sleep-logs`);
         sleepLogsCache.data = response.data;
-        sleepLogsCache.lastFetch = now;
+        sleepLogsCache.lastFetchTimestamp = currentTime;
         return response.data;
     } catch (error) {
         throw new Error('Error fetching sleep logs');
@@ -53,7 +54,7 @@ export const fetchSleepLogDetails = async (logId: number): Promise<SleepLog> => 
 export const addNewSleepLog = async (newLog: SleepLog): Promise<SleepLog> => {
     try {
         const response = await axios.post(`${BASE_URL}/sleep-logs`, newLog);
-        sleepLogsCache.lastFetch = 0;
+        sleepLogsCache.lastFetchTimestamp = 0;
         return response.data;
     } catch (error) {
         throw new Error('Error adding new sleep log');
