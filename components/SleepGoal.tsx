@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 
 interface SleepTracker {
   goalHours: number;
@@ -13,11 +13,11 @@ const SleepTrackerApp: React.FC = () => {
     const initialGoalHours = process.env.REACT_APP_INITIAL_GOAL_HOURS 
                                ? Number(process.env.REACT_APP_INITIAL_GOAL_HOURS)
                                : 8;
-    setSleepTracker({ ...sleepTracker, goalHours: initialGoalHours });
+    setSleepTracker(prevState => ({ ...prevState, goalHours: initialGoalHours }));
   }, []);
 
   const handleGoalHoursChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSleepTracker({ ...sleepTracker, goalHours: Number(event.target.value) });
+    setSleepTracker(prevState => ({ ...prevState, goalHours: Number(event.target.value) }));
   };
 
   const handleSleptHoursChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,13 +26,13 @@ const SleepTrackerApp: React.FC = () => {
 
   const handleTrackerSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setSleepTracker({ ...sleepTracker, achievedHours: sleptHours });
+    setSleepTracker(prevState => ({ ...prevState, achievedHours: sleptHours }));
   };
 
-  const calculateProgressPercentage = () => {
+  const calculateProgressPercentage = useMemo(() => {
     const progress = (sleepTracker.achievedHours / sleepTracker.goalHours) * 100;
     return Math.min(progress, 100);
-  };
+  }, [sleepTracker.achievedHours, sleepTracker.goalHours]);
 
   return (
     <div>
@@ -60,8 +60,8 @@ const SleepTrackerApp: React.FC = () => {
       </form>
       <div>
         <h3>Your Sleep Progress</h3>
-        <progress value={calculateProgressPercentage()} max="100"></progress>
-        <p>{calculateProgressPercentage()}% towards your sleep goal.</p>
+        <progress value={calculateProgressPercentage} max="100"></progress>
+        <p>{calculateProgressPercentage}% towards your sleep goal.</p>
       </div>
     </div>
   );
