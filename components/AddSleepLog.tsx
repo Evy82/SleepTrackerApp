@@ -14,11 +14,19 @@ const AddSleepLog: React.FC = () => {
     mood: '',
   });
 
+  // Utility function to handle value conversion if necessary
+  const convertValue = (name: string, value: string) => {
+    if (name === 'hoursSlept') {
+      return parseInt(value, 10) || 0; // Adds base 10 for clarity, defaults to 0 if NaN
+    }
+    return value;
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormState(prevState => ({
       ...prevState,
-      [name]: name === 'hoursSlept' ? parseInt(value) : value,
+      [name]: convertValue(name, value),
     }));
   };
 
@@ -57,7 +65,7 @@ const AddSleepLog: React.FC = () => {
             type="number"
             id="hoursSlept"
             name="hoursSlept"
-            value={formState.hoursSlept}
+            value={formState.hoursSlept.toString()}
             onChange={handleChange}
             required
           />
