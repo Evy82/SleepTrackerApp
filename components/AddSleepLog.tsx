@@ -14,10 +14,14 @@ const AddSleepLog: React.FC = () => {
     mood: '',
   });
 
-  // Utility function to handle value conversion if necessary
   const convertValue = (name: string, value: string) => {
     if (name === 'hoursSlept') {
-      return parseInt(value, 10) || 0; // Adds base 10 for clarity, defaults to 0 if NaN
+      const parsedValue = parseInt(value, 10);
+      if (isNaN(parsedValue)) {
+        alert('Please enter a valid number for hours slept.');
+        return 0;
+      }
+      return parsedValue;
     }
     return value;
   };
@@ -38,8 +42,11 @@ const AddSleepLog: React.FC = () => {
       alert('Sleep log added successfully!');
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        console.error('Failed to submit sleep log:', error.response?.data);
-        alert('Error submitting sleep log');
+        console.error('Failed to submit sleep log:', error.response?.data || error.message);
+        alert(`Error submitting sleep log: ${error.response?.data?.message || error.message}`);
+      } else if (error instanceof Error) {
+        console.error('An unexpected error occurred:', error.message);
+        alert(`An unexpected error occurred: ${error.message}`);
       }
     }
   };
