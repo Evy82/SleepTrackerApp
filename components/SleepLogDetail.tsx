@@ -20,21 +20,28 @@ const SleepLogDetailsComponent: React.FC<SleepLogProps> = ({ selectedSleepLogId 
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (selectedSleepLogId) {
-      setIsLoading(true);
-      setError(null);
-      axios.get<SleepLogDetails>(`${API_BASE_URL}/sleep-logs/${selectedSleepLogId}`)
-        .then(response => {
+    const fetchSleepLogDetails = async () => {
+      if (selectedSleepLogId) {
+        setIsLoading(true);
+        setError(null);
+        try {
+          const response = await axios.get<SleepLogDetails>(`${API_BASE_URL}/sleep-logs/${selectedSleepLogId}`);
           setSleepLogDetails(response.data);
+        } catch (err) {
+          if (axios.isAxiosError(err)) {
+            setError(err.response?.data.message || 'An unexpected error occurred');
+          } else {
+            setError('An unexpected error occurred');
+          }
+        } finally {
           setIsLoading(false);
-        })
-        .catch(error => {
-          setError('Failed to fetch sleep log details');
-          setIsLoading(false);
-        });
-    } else {
-      setSleepLogDetails(null); 
-    }
+        }
+      } else {
+        setSleepLogDetails(null);
+      }
+    };
+
+    fetchSleepLogDetails();
   }, [selectedSleepLogId]);
 
   if (isLoading) {
@@ -42,7 +49,7 @@ const SleepLogDetailsComponent: React.FC<SleepLogProps> = ({ selectedSleepLogId 
   }
 
   if (error) {
-    return <div>{error}</div>;
+    return <div>Error: {error}</div>;
   }
 
   if (!sleepLogDetails) {
